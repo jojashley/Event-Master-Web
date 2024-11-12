@@ -1,0 +1,63 @@
+.profile-container {
+    padding: 2rem;
+    font-family: Arial, sans-serif;
+    color: #333;
+    text-align: center; /* Centrar todo el contenido dentro del contenedor */
+  }
+  
+  .profile-header {
+    margin-bottom: 2rem;
+    font-size: 2rem;
+  }
+  
+  .profile-info {
+    margin-top: 2rem;
+  }
+  
+  .profile-item {
+    margin-bottom: 1.5rem;
+  }
+  
+  .profile-item label {
+    font-weight: bold;
+    display: block; /* Esto asegura que el label ocupe toda la línea */
+    text-align: center; /* Centrar los títulos también */
+  }
+  
+  .profile-item .info {
+    margin-top: 0.5rem;
+    color: #555;
+    text-align: center; /* Centrar solo la información */
+  }
+  
+  .language-buttons {
+    margin-top: 2rem;
+  }
+  
+  .language-button {
+    padding: 0.8rem 1.2rem;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 1rem;
+    margin: 0 1rem; /* Espacio entre los botones */
+  }
+  
+  .language-button:hover {
+    background-color: #45a049;
+  }
+
+  .profile-image-large {
+    width: 150px; /* Ajusta el tamaño según tus preferencias */
+    height: 150px;
+    border-radius: 50%; /* Hace que la imagen sea circular */
+    margin-bottom: 1rem; /* Espacio entre la imagen y el email */
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+  

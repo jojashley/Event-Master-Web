@@ -1,0 +1,53 @@
+/* NavBar Styles */
+.navbar {
+  display: flex;
+  justify-content: center;  /* Centra todo en la navbar */
+  align-items: center;
+  padding: 0.5rem 2rem;  /* Reducir el padding para hacerla más angosta */
+  background-color: #333;
+  color: white;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  margin-bottom: 20px;
+}
+
+.navbar-container {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 1200px;  /* Limitar el ancho máximo de la barra de navegación */
+}
+
+.navbar-logo {
+  font-size: 1.5rem;  /* Hacer el logo más pequeño */
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.nav-links {
+  display: flex;
+  list-style: none;
+  padding: 0;
+  font-weight: bold;
+  justify-content: center;  /* Centra los enlaces horizontalmente */
+  width: 100%;
+}
+
+.nav-item {
+  margin: 0 1.5rem;  /* Espaciado entre los enlaces */
+}
+
+.nav-link {
+  color: white;
+  text-decoration: none;
+  font-size: 1.1rem;
+  transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+  color: #f39c12;
+}
