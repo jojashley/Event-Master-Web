@@ -1,82 +1,32 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import { EventCard } from "../../components/EventCard"; 
 import './styles.css';
+import {EventsSuppliers} from "../../types";
+import {getSupplier} from "../../store";
 
-const event = [
-    {
-        id: '1',
-        email_user: 'jojashley@gmail.com',
-        type: 'Boda',
-        date: '07/11/2024',
-        start_time: '17:00',
-        end_time: '22:00',
-        ubication: 'En la catedral, San Carlos',
-        suppliers: [
-            { email_supplier: "supplier1@example.com", state: true },
-            { email_supplier: "service1@example.com", state: true }
-        ]
-    },
-    {
-        id: '2',
-        email_user: 'juanperez@yahoo.com',
-        type: 'Cumpleaños',
-        date: '14/11/2024',
-        start_time: '15:00',
-        end_time: '19:00',
-        ubication: 'En el salón del centro de eventos La Plaza',
-        suppliers: [
-            { email_supplier: "service1@example.com", state: false }
-        ]
-    },
-    {
-        id: '3',
-        email_user: 'maria.gomez@gmail.com',
-        type: 'Fiesta de empresa',
-        date: '20/11/2024',
-        start_time: '20:00',
-        end_time: '02:00',
-        ubication: 'En el salón de conferencias del hotel Panorama',
-        suppliers: [
-            { email_supplier: "supplier1@example.com", state: false },
-            { email_supplier: "supplier2@example.com", state: true },
-            { email_supplier: "supplier3@example.com", state: true }
-        ]
-    },
-    {
-        id: '4',
-        email_user: 'carlos.martinez@yahoo.com',
-        type: 'Aniversario',
-        date: '25/11/2024',
-        start_time: '18:30',
-        end_time: '23:30',
-        ubication: 'Restaurante La Riviera',
-        suppliers: [
-            { email_supplier: "service1@example.com", state: false },
-            { email_supplier: "service2@example.com", state: true },
-            { email_supplier: "service3@example.com", state: false }
-        ]
-    },
-    {
-        id: '5',
-        email_user: 'lucia.smith@hotmail.com',
-        type: 'Conferencia',
-        date: '01/12/2024',
-        start_time: '09:00',
-        end_time: '17:00',
-        ubication: 'Centro de convenciones ExpoCity',
-        suppliers: [
-            { email_supplier: "vendor1@example.com", state: true },
-            { email_supplier: "vendor2@example.com", state: false },
-            { email_supplier: "vendor3@example.com", state: true }
-        ]
-    }
-];
 
 export const Events: React.FC = () => {
-    // Filtrar los eventos que tienen el proveedor "service1@example.com"
-    const filteredEvents = event
-      .filter((event) => event.suppliers.some((supplier) => supplier.email_supplier === "service1@example.com"))
-      .reverse(); // Invertir el orden para mostrar del último al primero
+    const [events,setEvent] = useState<EventsSuppliers[]>([])
+
+    const getEvents = async (email:string) => {
+        try{
+            const url: string = `${import.meta.env.VITE_API_URL}get_supplier_events?email_user=${email}`;
+            const response = await fetch(url);
+            const json = await response.json();
+            if(json.state){
+                const eventos:EventsSuppliers[] = json.data;
+                setEvent(eventos);
+            }
+        } catch (e) {
+            console.log(e);
+        }
+    }
+    useEffect(() => {
+        const supplier = getSupplier();
+        if(supplier){
+            getEvents(supplier?.email)
+        }
+    }, []);
   
     return (
       <div className="event-container">
@@ -85,7 +35,7 @@ export const Events: React.FC = () => {
         </header>
   
         <div className="event-list">
-          {filteredEvents.map((event) => (
+          {events.map((event) => (
             <EventCard key={event.id} event={event} />
           ))}
         </div>

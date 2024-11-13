@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom"; // Importamos useNavigate para redirigir
 import './styles.css';
+import {setSupplier} from "../../store";
+import {Supplier} from "../../types";
 
 export const Login: React.FC = () => {
   const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
   const [password, setPassword] = useState(""); 
   const [tipoServicio, setTipoServicio] = useState("");
   const [descripcion, setDescripcion] = useState("");
@@ -11,16 +14,52 @@ export const Login: React.FC = () => {
 
   const navigate = useNavigate();
 
-  const handleLogin = (e: React.FormEvent) => {
-    e.preventDefault(); 
-    // Aquí se pueden agregar más lógicas de validación o manejo de datos
-    console.log("Info de Login:", { email, password, tipoServicio, descripcion, imageUrl });
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    console.log(`email:${email}name:${name}password:${password}tipo:${tipoServicio}descrip:${descripcion}image:${imageUrl}`);
+    if(email && password && tipoServicio && descripcion && imageUrl && name) {
+      try {
+        const url: string = `${import.meta.env.VITE_API_URL}create_supplier`;
+        await fetch(url,{
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            email:email,
+            name:name,
+            password:password,
+            description: descripcion,
+            supplier_type: tipoServicio,
+            url_image: imageUrl
+          }), // Convierte el objeto a JSON
+        });
+        const newSup:Supplier = {
+          name: name,
+          email: email,
+          password: password,
+          description: descripcion,
+          type: tipoServicio,
+          url_image: imageUrl
+        }
+        setSupplier(newSup);
+        sessionStorage.setItem('isLoggedIn', 'true');  // Guardar estado de login
+        window.dispatchEvent(new Event("storage"));  // Forzar actualización
+        navigate("/");
+        alert("Se creo correctamente");
+      } catch (e) {
+        console.log(e);
+        alert("Error al cambiar el estado");
+      }
+    }else {
+      alert("Llena todos los campos")
+    }
 
-    navigate("/home");
+
   };
 
   const handleRedirectToSignIn = () => {
-    navigate("/sign_in"); // Redirige a la ruta de Sign In
+    navigate("/"); // Redirige a la ruta de Sign In
   };
 
   return (
@@ -37,6 +76,17 @@ export const Login: React.FC = () => {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="Ingrese su email"
+            required
+          />
+        </div>
+
+        <div className="login-item">
+          <label>Name:</label>
+          <input
+            type="text"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            placeholder="Ingrese su nombre"
             required
           />
         </div>
@@ -87,7 +137,7 @@ export const Login: React.FC = () => {
               <img
                 src={imageUrl}
                 alt="Imagen subida"
-                style={{ maxWidth: "200px", marginTop: "1rem" }}
+                style={{maxWidth: "200px", marginTop: "1rem"}}
               />
             </div>
           )}
@@ -103,7 +153,7 @@ export const Login: React.FC = () => {
       <div className="login-footer">
         <p>
           ¿Ya tienes cuenta?{" "}
-          <span onClick={handleRedirectToSignIn} style={{ color: "#007bff", cursor: "pointer" }}>
+          <span onClick={handleRedirectToSignIn} style={{color: "#007bff", cursor: "pointer"}}>
             Iniciar sesión
           </span>
         </p>

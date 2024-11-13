@@ -1,23 +1,46 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom"; 
 import './styles.css';
+import {setSupplier} from "../../store";
 
 export const SignIn: React.FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
   const navigate = useNavigate();
 
-  const handleSignIn = (e: React.FormEvent) => {
-    e.preventDefault(); 
-    // Aquí se pueden agregar más lógicas de validación o manejo de datos
-    console.log("Info de Sign In:", { email, password });
+  const sign_in = async (email: string, password: string) => {
+    try {
+      const url: string = `${import.meta.env.VITE_API_URL}getsupplier?email=${email}`;
+      console.log(url);
+      const response = await fetch(url);
+      const json = await response.json();
+      console.log(json);
+      if (json.state && json.data.password === password) {
+        console.log("si coincide");
+        setSupplier(json.data);
+        sessionStorage.setItem('isLoggedIn', 'true');  // Guardar estado de login
+        window.dispatchEvent(new Event("storage"));  // Forzar actualización
+        navigate("/");  // Redirigir tras el login exitoso
+      } else {
+        setSupplier(null);
+      }
+    } catch (e) {
+      console.log(e);
+      alert("Error al Iniciar sesion");
+    }
+  };
 
-    navigate("/home");
+  const handleSignIn = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email || !password) {
+      alert("Debes llenar todos los campos");
+      return;
+    }
+    sign_in(email, password);
   };
 
   const handleRedirectToLogin = () => {
-    navigate("/login"); 
+    navigate("/sign_up"); // Redirige a la ruta de Sign In
   };
 
   return (
