@@ -3,10 +3,11 @@ import { EventCard } from "../../components/EventCard";
 import './styles.css';
 import {EventsSuppliers} from "../../types";
 import {getSupplier} from "../../store";
-
+import { useTranslation } from 'react-i18next';
 
 export const Events: React.FC = () => {
     const [events,setEvent] = useState<EventsSuppliers[]>([])
+    const [t] = useTranslation("global");
 
     const getEvents = async (email:string) => {
         try{
@@ -31,7 +32,7 @@ export const Events: React.FC = () => {
     return (
       <div className="event-container">
         <header className="event-header">
-          <h1>My events</h1>
+          <h1>{t('eventsTitle')}</h1> {/* Traducción del título "Mis eventos" */}
         </header>
   
         <div className="event-list">

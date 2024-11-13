@@ -1,23 +1,18 @@
 import React from "react";
 import './styles.css';
+import { useTranslation } from 'react-i18next';
 
 export const Home: React.FC = () => {
+  const { t } = useTranslation("global");
+
   return (
     <div className="home-container">
       <header className="home-header">
-        <h1>Bienvenido a Events Master</h1>
+        <h1>{t('homeTitle')}</h1> {/* Traducción del título */}
       </header>
-
       <section className="home-description">
-        <p>
-          Esta es una plataforma diseñada especialmente para proveedores de servicios. Aquí, puedes
-          subir tus servicios para eventos, como bodas, fiestas, conferencias y más. Los usuarios podrán
-          contactarte para contratar tus servicios y hacer de su evento un éxito.
-        </p>
-        <p>
-          Si eres proveedor, ¡estás en el lugar indicado para expandir tu negocio y conectar con
-          potenciales clientes!
-        </p>
+        <p>{t('homeDescription1')}</p> {/* Traducción de la primera descripción */}
+        <p>{t('homeDescription2')}</p> {/* Traducción de la segunda descripción */}
       </section>
     </div>
   );
