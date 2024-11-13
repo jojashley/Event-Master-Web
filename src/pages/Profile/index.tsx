@@ -1,5 +1,6 @@
 import React from "react";
 import './styles.css';
+import {getSupplier} from "../../store";
 
 export const Profile: React.FC = () => {
   // Constantes con datos de ejemplo
@@ -20,17 +21,17 @@ export const Profile: React.FC = () => {
 
       <div className="profile-info">
         <div className="profile-item">
-          <img src={imagenPerfil} alt="Profile" className="profile-image-large" /> {/* Imagen de perfil más grande */}
+          <img src={user?.url_image} alt="Profile" className="profile-image-large" /> {/* Imagen de perfil más grande */}
           <label>Email:</label>
-          <div className="info">{email}</div>
+          <div className="info">{user?.email}</div>
         </div>
         <div className="profile-item">
           <label>Tipo de servicio:</label>
-          <div className="info">{tipoServicio}</div>
+          <div className="info">{user?.type}</div>
         </div>
         <div className="profile-item">
           <label>Descripción:</label>
-          <div className="info">{descripcion}</div>
+          <div className="info">{user?.description}</div>
         </div>
       </div>
 
