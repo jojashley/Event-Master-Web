@@ -6,9 +6,8 @@ export const Profile: React.FC = () => {
   const email = "ejemplo@correo.com";
   const tipoServicio = "Premium";
   const descripcion = "Este es un servicio premium de alta calidad.";
-  const imagenPerfil = "https://via.placeholder.com/150"; // Ruta de imagen (ajusta a una imagen PNG si tienes una)
+  const imagenPerfil = "https://via.placeholder.com/150"; 
 
-  // Función para mostrar los datos en el console log
   const mostrarInfo = () => {
     console.log(`Info: Email: ${email}, Tipo de Servicio: ${tipoServicio}, Descripción: ${descripcion}`);
   };
